@@ -73,7 +73,7 @@ object FunctionEssential {
     }
 
     /**
-     * 非创造模式使用鼠标中键点击弩卸载已装备的箭
+//     * 非创造模式使用鼠标中键点击弩卸载已装备的箭
      */
     @SubscribeEvent(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun e(e: InventoryClickEvent) {

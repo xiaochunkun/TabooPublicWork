@@ -1,0 +1,12 @@
+setting:
+  # 是否启用模块
+  enable: false
+money-format: "###,##0.00$"
+
+database:
+  # 可选类型 YAML,SQL
+  type: "yaml"
+  # 是否使用公共数据库文件
+  public: true
+  # 数据库表名
+  table: "economy"

@@ -1,0 +1,259 @@
+setting:
+  # 是否启用模块
+  enable: false
+  language: "zh_CN"
+all:
+  # 禁止破坏
+  break:
+    # 是否启用
+    enable: true
+    # op是否同样生效
+    op: false
+    # 类型  false为读取list列表
+    typeAll: true
+    list:
+      - 'GRASS_BLOCK'
+  # 禁止建造
+  build:
+    # 是否启用
+    enable: true
+    # op是否同样生效
+    op: false
+    # 类型  false为读取list列表
+    typeAll: true
+    list:
+      - 'GRASS_BLOCK'
+  # 禁止使用
+  use:
+    # 是否启用
+    enable: true
+    # op是否同样生效
+    op: false
+    # 类型  false为读取list列表
+    typeAll: true
+    list:
+      - 'GRASS_BLOCK'
+  # 禁止爆炸
+  explode:
+    # 是否启用
+    enable: true
+  # 天气保持晴天
+  weather:
+    # 是否启用
+    enable: true
+  # 禁止玩家丢弃
+  itemDrop:
+    # 是否启用
+    enable: true
+    # op是否同样生效
+    op: false
+  # 禁止玩家移动
+  move:
+    # 是否启用
+    enable: false
+    # op是否同样生效
+    op: false
+  # 禁止玩家飞行
+  fly:
+    # 是否启用
+    enable: true
+    # op是否同样生效
+    op: false
+  # 保持物品不掉落
+  keepInventory:
+    # 是否启用
+    enable: true
+    # op是否同样生效
+    op: true
+  # 保持经验不掉落
+  keepLevel:
+    # 是否启用
+    enable: true
+    # op是否同样生效
+    op: true
+  # 禁止火焰、菌丝蔓延
+  spread:
+    # 是否启用
+    enable: true
+  # 禁止方块点燃
+  ignite:
+    # 是否启用
+    enable: true
+  # 禁止雪、冰的融化  方块的燃烧消失
+  fade:
+    # 是否启用
+    enable: true
+  # 禁止树叶凋落
+  leaves:
+    # 是否启用
+    enable: true
+  # 禁止生物出生
+  spawn:
+    # 是否启用
+    enable: true
+  # 禁止耕地踩坏
+  soil:
+    # 是否启用
+    enable: true
+    # op是否同样生效
+    op: true
+  # 禁止打开容器
+  container:
+    # 是否启用
+    enable: true
+    # op是否同样生效
+    op: false
+    #读取list列表
+    list:
+      - CHEST
+      - TRAPPED_CHEST
+      - FURNACE
+  # 禁止鸡生蛋
+  egg:
+    # 是否启用
+    enable: true
+  # 是否禁止掉饱食度
+  food:
+    # 是否启用
+    enable: true
+    # op是否同样生效
+    list:
+      - "OP"
+  # 禁止流体流动
+  fluid:
+    # 是否启用
+    enable: true
+    # op是否同样生效
+    op: true
+    # 类型  false为读取list列表
+    typeAll: false
+    list:
+      - 'LAVA'
+world:
+  world:
+    # 禁止破坏
+    break:
+      # 是否启用
+      enable: true
+      # op是否同样生效
+      op: false
+      # 类型  false为读取list列表
+      typeAll: true
+      list:
+        - 'GRASS_BLOCK'
+    # 禁止建造
+    build:
+      # 是否启用
+      enable: true
+      # op是否同样生效
+      op: false
+      # 类型  false为读取list列表
+      typeAll: true
+      list:
+        - 'GRASS_BLOCK'
+    # 禁止使用
+    use:
+      # 是否启用
+      enable: true
+      # op是否同样生效
+      op: false
+      # 类型  false为读取list列表
+      typeAll: true
+      list:
+        - 'GRASS_BLOCK'
+    # 禁止爆炸
+    explode:
+      # 是否启用
+      enable: true
+    # 天气保持晴天
+    weather:
+      # 是否启用
+      enable: true
+    # 禁止玩家丢弃
+    itemDrop:
+      # 是否启用
+      enable: true
+      # op是否同样生效
+      op: false
+    # 禁止玩家移动
+    move:
+      # 是否启用
+      enable: false
+      # op是否同样生效
+      op: false
+    # 禁止玩家飞行
+    fly:
+      # 是否启用
+      enable: true
+      # op是否同样生效
+      op: false
+    # 保持物品不掉落
+    keepInventory:
+      # 是否启用
+      enable: true
+      # op是否同样生效
+      op: true
+    # 保持经验不掉落
+    keepLevel:
+      # 是否启用
+      enable: true
+      # op是否同样生效
+      op: true
+    # 禁止火焰、菌丝蔓延
+    spread:
+      # 是否启用
+      enable: true
+    # 禁止方块点燃
+    ignite:
+      # 是否启用
+      enable: true
+    # 禁止雪、冰的融化  方块的燃烧消失
+    fade:
+      # 是否启用
+      enable: true
+    # 禁止树叶凋落
+    leaves:
+      # 是否启用
+      enable: true
+    # 禁止生物出生
+    spawn:
+      # 是否启用
+      enable: true
+    # 禁止耕地踩坏
+    soil:
+      # 是否启用
+      enable: true
+      # op是否同样生效
+      op: true
+    # 禁止打开容器
+    container:
+      # 是否启用
+      enable: true
+      # op是否同样生效
+      op: false
+      #读取list列表
+      list:
+        - CHEST
+        - TRAPPED_CHEST
+        - FURNACE
+    # 禁止鸡生蛋
+    egg:
+      # 是否启用
+      enable: true
+    # 是否禁止掉饱食度
+    food:
+      # 是否启用
+      enable: true
+      # op是否同样生效
+      list:
+        - "OP"
+    # 禁止流体流动
+    fluid:
+      # 是否启用
+      enable: true
+      # op是否同样生效
+      op: true
+      # 类型  false为读取list列表
+      typeAll: false
+      list:
+        - 'LAVA'

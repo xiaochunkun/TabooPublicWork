@@ -17,6 +17,8 @@ dependencies {
     implementation(project(":module:module-home"))
     implementation(project(":module:module-spawner"))
     implementation(project(":module:module-tpa"))
+    implementation(project(":module:module-economy"))
+    implementation(project(":module:module-protect"))
 }
 
 

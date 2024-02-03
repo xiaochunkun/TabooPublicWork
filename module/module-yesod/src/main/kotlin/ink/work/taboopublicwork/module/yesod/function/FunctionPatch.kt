@@ -130,7 +130,7 @@ object FunctionPatch {
         }
     }
 
-    fun getArmor(entity: LivingEntity): Array<ItemStack?> {
+    private fun getArmor(entity: LivingEntity): Array<ItemStack?> {
         val items = arrayOfNulls<ItemStack>(6)
         items[0] = entity.equipment?.helmet
         items[1] = entity.equipment?.chestplate
