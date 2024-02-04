@@ -95,15 +95,9 @@ object ProtectListener {
     // 天气保持晴天
     @SubscribeEvent
     fun onWeatherChange(event: WeatherChangeEvent) {
-        ModuleProtect.allProtectDataList.forEach { data ->
-            if (!data.name.equals("weather", true)) return@forEach
-            if (!data.enabled) return@forEach
-            event.isCancelled = true
-        }
+        val world = event.world.name
 
-        val world = event.world
-
-        ModuleProtect.worldProtectDataMap[world.name]?.forEach { data ->
+        ModuleProtect.getProtectData(world).forEach { data ->
             if (!data.name.equals("weather", true)) return@forEach
             if (data.enabled) {
                 event.isCancelled = true
