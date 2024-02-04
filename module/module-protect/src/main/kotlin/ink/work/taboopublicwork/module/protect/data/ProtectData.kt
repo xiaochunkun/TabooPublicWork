@@ -10,12 +10,12 @@ data class ProtectData(
     var typeALL: Boolean = false,
     var type: List<String> = listOf()
 ) {
-    constructor(key: String, section: ConfigurationSection) : this() {
-        name = key
-        enabled = section.getBoolean("$key.enabled", false)
-        op = section.getBoolean("$key.op", false)
-        typeALL = section.getBoolean("$key.typeALL", false)
-        type = section.getStringList("$key.type")
+    constructor(key: String, name: String, section: ConfigurationSection) : this() {
+        this.name = name
+        enabled = section.getBoolean("$key.$name.enable", false)
+        op = section.getBoolean("$key.$name.op", false)
+        typeALL = section.getBoolean("$key.$name.typeAll", false)
+        type = section.getStringList("$key.$name.list")
     }
 
     fun getTypeList(): List<XMaterial> {

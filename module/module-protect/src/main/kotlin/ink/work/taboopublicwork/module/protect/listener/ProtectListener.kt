@@ -1,5 +1,6 @@
 package ink.work.taboopublicwork.module.protect.listener
 
+import ink.work.taboopublicwork.TabooPublicWork
 import ink.work.taboopublicwork.module.protect.ModuleProtect
 import ink.work.taboopublicwork.module.protect.data.ProtectData
 import ink.work.taboopublicwork.module.protect.utils.containsIgnoreCase
@@ -15,6 +16,8 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.event.player.PlayerToggleFlightEvent
 import org.bukkit.event.weather.WeatherChangeEvent
+import org.bukkit.metadata.FixedMetadataValue
+import org.bukkit.metadata.MetadataValue
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.library.xseries.XMaterial
 
@@ -61,9 +64,9 @@ object ProtectListener {
     }
 
     private fun accept(data: ProtectData, key: String, player: Player, type: Material): Boolean {
-        if (data.name.equals(key, true)) return false
+        if (!data.name.equals(key, true)) return false
         if (!data.enabled) return false
-        if (data.op && !player.isOp) {
+        if (data.op || !player.isOp) {
             if (data.typeALL) {
                 return true
             } else {
@@ -95,10 +98,6 @@ object ProtectListener {
         ModuleProtect.allProtectDataList.forEach { data ->
             if (!data.name.equals("weather", true)) return@forEach
             if (!data.enabled) return@forEach
-            Bukkit.getWorlds().forEach { world ->
-                world.setStorm(false)
-                world.isThundering = false
-            }
             event.isCancelled = true
         }
 
@@ -107,8 +106,6 @@ object ProtectListener {
         ModuleProtect.worldProtectDataMap[world.name]?.forEach { data ->
             if (!data.name.equals("weather", true)) return@forEach
             if (data.enabled) {
-                world.setStorm(false)
-                world.isThundering = false
                 event.isCancelled = true
             }
         }
@@ -137,7 +134,7 @@ object ProtectListener {
 
         ModuleProtect.getProtectData(world).forEach { data ->
             if (!data.name.equals("move", true)) return@forEach
-            if (data.enabled && data.op && !player.isOp) {
+            if (data.enabled && (data.op || !player.isOp)) {
                 event.isCancelled = true
             }
         }
@@ -151,7 +148,7 @@ object ProtectListener {
 
         ModuleProtect.getProtectData(world).forEach { data ->
             if (!data.name.equals("fly", true)) return@forEach
-            if (data.enabled && data.op && !player.isOp) {
+            if (data.enabled && (data.op || !player.isOp)) {
                 event.isCancelled = true
             }
         }
@@ -165,7 +162,7 @@ object ProtectListener {
 
         ModuleProtect.getProtectData(world).forEach { data ->
             if (!data.name.equals("keepInventory", true)) return@forEach
-            if (data.enabled && data.op && !player.isOp) {
+            if (data.enabled && (data.op || !player.isOp)) {
                 event.keepInventory = true
             }
         }
@@ -179,7 +176,7 @@ object ProtectListener {
 
         ModuleProtect.getProtectData(world).forEach { data ->
             if (!data.name.equals("keepLevel", true)) return@forEach
-            if (data.enabled && data.op && !player.isOp) {
+            if (data.enabled && (data.op || !player.isOp)) {
                 event.keepLevel = true
             }
         }
@@ -252,7 +249,7 @@ object ProtectListener {
                     Class.forName("io.lumine.xikage.mythicmobs.mobs.MobManager")
                 }
 
-                val spawnFlag = clazz.getField("spawnFlag")
+                val spawnFlag = clazz.getField("spawnflag")
                 val result = spawnFlag.get(clazz) as Boolean
                 if (result) return
             }
@@ -269,7 +266,7 @@ object ProtectListener {
 
         ModuleProtect.getProtectData(world).forEach { data ->
             if (!data.name.equals("soil", true)) return@forEach
-            if (data.enabled && data.op && !player.isOp && block.type == XMaterial.FARMLAND.parseMaterial()!!) {
+            if (data.enabled && (data.op || !player.isOp) && block.type == XMaterial.FARMLAND.parseMaterial()!!) {
                 event.isCancelled = true
             }
         }
@@ -285,7 +282,7 @@ object ProtectListener {
 
         ModuleProtect.getProtectData(world).forEach { data ->
             if (!data.name.equals("container", true)) return@forEach
-            if (data.enabled && data.op && !player.isOp && block.type == XMaterial.FARMLAND.parseMaterial()!!) {
+            if (data.enabled && (data.op || !player.isOp) && block.type == XMaterial.FARMLAND.parseMaterial()!!) {
                 event.isCancelled = true
             }
         }

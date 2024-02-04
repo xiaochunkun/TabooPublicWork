@@ -5,6 +5,7 @@ import ink.work.taboopublicwork.module.protect.data.ProtectData
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.function.info
+import taboolib.common.platform.function.submit
 import taboolib.module.configuration.Configuration
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArrayList
@@ -42,16 +43,14 @@ object ModuleProtect : IModule {
         allProtectDataList = CopyOnWriteArrayList()
         worldProtectDataMap = ConcurrentHashMap()
         config.getConfigurationSection("all")?.getKeys(false)?.forEach {
-            val section = config.getConfigurationSection("all.$it") ?: return@forEach
-            val protectData = ProtectData("all.$it", section)
+            val protectData = ProtectData("all", it, config)
             allProtectDataList.add(protectData)
         }
         config.getConfigurationSection("world")?.getKeys(false)?.forEach {
             val section = config.getConfigurationSection("world.$it") ?: return@forEach
             val list = section.getKeys(false).map { key ->
-                val data = section.getConfigurationSection(it + key) ?: return@map null
-                ProtectData(key, data)
-            }.filterNotNull()
+                ProtectData("world.$it", key, config)
+            }
             worldProtectDataMap[it] = list
         }
     }
