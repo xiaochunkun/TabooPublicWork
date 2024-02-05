@@ -1,5 +1,6 @@
 package ink.work.taboopublicwork.module.economy
 
+import ink.work.taboopublicwork.utils.playerdata.hasDataString
 import net.milkbowl.vault.economy.AbstractEconomy
 import net.milkbowl.vault.economy.EconomyResponse
 import java.text.DecimalFormat
@@ -30,8 +31,16 @@ class VaultHandler : AbstractEconomy() {
         return ""
     }
 
+    fun setBalance(playerName: String, amount: Double): EconomyResponse {
+        if (amount < 0) {
+            return EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.FAILURE, "Cannot set negative funds")
+        }
+        EconomyPlayerData.set(playerName.getOfflinePlayerExact(), "money", amount.toString())
+        return EconomyResponse(amount, amount, EconomyResponse.ResponseType.SUCCESS, "")
+    }
+
     override fun hasAccount(playerName: String): Boolean {
-        return ModuleEconomy.database.hasAccount(playerName)
+        return playerName.getOfflinePlayerExact().hasDataString("money")
     }
 
     override fun hasAccount(playerName: String, worldName: String): Boolean {
@@ -39,7 +48,7 @@ class VaultHandler : AbstractEconomy() {
     }
 
     override fun getBalance(playerName: String): Double {
-        return ModuleEconomy.database.getBalance(playerName)
+        return EconomyPlayerData.get(playerName.getOfflinePlayerExact(), "money")?.toDoubleOrNull() ?: 0.0
     }
 
     override fun getBalance(playerName: String, worldName: String): Double {
@@ -59,11 +68,12 @@ class VaultHandler : AbstractEconomy() {
             return EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.FAILURE, "Cannot deposit negative funds")
         }
         if (getBalance(playerName) < amount) {
-            return EconomyResponse(0.0, getBalance(playerName), EconomyResponse.ResponseType.FAILURE,
+            return EconomyResponse(
+                0.0, getBalance(playerName), EconomyResponse.ResponseType.FAILURE,
                 "Could not withdraw $amount from $playerName because they don't have enough funds"
             )
         }
-        ModuleEconomy.database.addBalance(playerName, -amount)
+        setBalance(playerName, getBalance(playerName) - amount)
         return EconomyResponse(amount, getBalance(playerName), EconomyResponse.ResponseType.SUCCESS, "")
     }
 
@@ -75,7 +85,7 @@ class VaultHandler : AbstractEconomy() {
         if (amount < 0) {
             return EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.FAILURE, "Cannot deposit negative funds")
         }
-        ModuleEconomy.database.addBalance(playerName, amount)
+        setBalance(playerName, getBalance(playerName) + amount)
         return EconomyResponse(amount, getBalance(playerName), EconomyResponse.ResponseType.SUCCESS, "")
     }
 

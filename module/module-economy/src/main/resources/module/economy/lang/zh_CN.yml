@@ -1,0 +1,4 @@
+money: "&e金钱: &6{0}"
+new-balance: "&6{0} &e现有金钱: &6{1}"
+take-balance: '&e从&e玩家 &6{0} &e取走了 &6{1}'
+give-balance: '&e给予&e玩家 &6{0} &e了 &6{1}'

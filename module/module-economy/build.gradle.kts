@@ -4,7 +4,7 @@ dependencies {
     compileOnly("ink.ptms.core:v12002:12002:mapped")
 
     compileOnly(project(":project:core"))
-    compileOnly(project(":project:util-sql"))
+    compileOnly(project(":project:util-player-data"))
 
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
 }

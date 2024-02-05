@@ -1,11 +1,10 @@
 package ink.work.taboopublicwork.module.economy
 
 import ink.work.taboopublicwork.api.IModule
-import ink.work.taboopublicwork.module.economy.database.EconomyDatabase
-import ink.work.taboopublicwork.module.economy.database.EconomyYaml
-import ink.work.taboopublicwork.module.economy.database.IEconomyDatabase
+import org.bukkit.event.player.PlayerJoinEvent
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
+import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common.platform.function.info
 import taboolib.module.configuration.Configuration
 
@@ -18,11 +17,8 @@ object ModuleEconomy : IModule {
     override lateinit var config: Configuration
     override lateinit var langFile: Configuration
 
-    // Database接口载体
-    lateinit var database: IEconomyDatabase
-
     // VaultHandler接口载体
-    private lateinit var vaultManager: VaultManager
+    lateinit var vaultManager: VaultManager
 
     var moneyFormat = "###,##0.00$"
 
@@ -30,22 +26,14 @@ object ModuleEconomy : IModule {
     fun init() {
         initModule {
             info("Module - Economy 已启用")
+            EconomyPlayerData.module = this
             moneyFormat = config.getString("money-format") ?: "###,##0.00$"
             vaultManager = VaultManager()
-            val databaseType = config.getString("database.type", "yaml")!!
-            database = when (databaseType) {
-                "yaml","YAML" -> EconomyYaml()
-                "sql","SQL" -> EconomyDatabase()
-                else -> EconomyYaml()
-            }
-            database.load()
             vaultManager.hook()
-            info("Module - Economy 数据库类型: $databaseType")
         }
         reloadModule {
             config.reload()
             moneyFormat =  config.getString("money-format") ?: "###,##0.00$"
-            database.load()
         }
     }
 
@@ -55,6 +43,4 @@ object ModuleEconomy : IModule {
             vaultManager.unHook()
         }
     }
-
-
 }

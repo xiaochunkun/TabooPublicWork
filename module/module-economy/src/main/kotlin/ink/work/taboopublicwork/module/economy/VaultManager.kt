@@ -8,7 +8,7 @@ import org.bukkit.plugin.ServicePriority
 
 class VaultManager {
 
-    private lateinit var economy: VaultHandler
+    lateinit var economy: VaultHandler
 
     fun hook(){
         if (!this::economy.isInitialized) {
