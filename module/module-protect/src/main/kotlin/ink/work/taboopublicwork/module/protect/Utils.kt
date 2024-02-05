@@ -1,4 +1,4 @@
-package ink.work.taboopublicwork.module.protect.utils
+package ink.work.taboopublicwork.module.protect
 
 import org.bukkit.plugin.Plugin
 

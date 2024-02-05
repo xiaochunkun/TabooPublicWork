@@ -1,10 +1,5 @@
-package ink.work.taboopublicwork.module.protect.listener
+package ink.work.taboopublicwork.module.protect
 
-import ink.work.taboopublicwork.TabooPublicWork
-import ink.work.taboopublicwork.module.protect.ModuleProtect
-import ink.work.taboopublicwork.module.protect.data.ProtectData
-import ink.work.taboopublicwork.module.protect.utils.containsIgnoreCase
-import ink.work.taboopublicwork.module.protect.utils.getFirstPluginVersion
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.EntityType
@@ -16,8 +11,6 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.event.player.PlayerToggleFlightEvent
 import org.bukkit.event.weather.WeatherChangeEvent
-import org.bukkit.metadata.FixedMetadataValue
-import org.bukkit.metadata.MetadataValue
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.library.xseries.XMaterial
 
@@ -67,10 +60,10 @@ object ProtectListener {
         if (!data.name.equals(key, true)) return false
         if (!data.enabled) return false
         if (data.op || !player.isOp) {
-            if (data.typeALL) {
+            if (data.typeALL && !data.getWhiteList().contains(XMaterial.matchXMaterial(type))) {
                 return true
             } else {
-                if (data.getTypeList().contains(XMaterial.matchXMaterial(type))) {
+                if (data.getBlackList().contains(XMaterial.matchXMaterial(type))) {
                     return true
                 }
             }
@@ -276,7 +269,7 @@ object ProtectListener {
 
         ModuleProtect.getProtectData(world).forEach { data ->
             if (!data.name.equals("container", true)) return@forEach
-            if (data.enabled && (data.op || !player.isOp) && block.type == XMaterial.FARMLAND.parseMaterial()!!) {
+            if (data.enabled && (data.op || !player.isOp) && data.getBlackList().contains(XMaterial.matchXMaterial(block.type))) {
                 event.isCancelled = true
             }
         }
@@ -306,11 +299,11 @@ object ProtectListener {
             if (!data.name.equals("food", true)) return@forEach
             if (!data.enabled) return@forEach
             if (player.isOp) {
-                if (data.type.containsIgnoreCase("op")) {
+                if (data.white.containsIgnoreCase("op")) {
                     event.isCancelled = true
                 }
             } else {
-                if (data.type.containsIgnoreCase("player")) {
+                if (data.white.containsIgnoreCase("player")) {
                     event.isCancelled = true
                 }
             }
@@ -326,10 +319,10 @@ object ProtectListener {
         ModuleProtect.getProtectData(world).forEach { data ->
             if (!data.name.equals("fluid", true)) return@forEach
             if (!data.enabled) return@forEach
-            if (data.typeALL) {
+            if (data.typeALL && !data.getWhiteList().contains(XMaterial.matchXMaterial(block.type))) {
                 event.isCancelled = true
             } else {
-                if (data.getTypeList().contains(XMaterial.matchXMaterial(block.type))) {
+                if (data.getBlackList().contains(XMaterial.matchXMaterial(block.type))) {
                     event.isCancelled = true
                 }
             }

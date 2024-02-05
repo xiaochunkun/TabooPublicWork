@@ -24,22 +24,6 @@ object EconomyCommand : ICommand {
 
     @CommandBody
     val main = mainCommand {
-//        dynamic("name") {
-//            suggestion<CommandSender> { _, context ->
-//                ModuleWarp.database.getDataList().map { it.name }
-//            }
-//            execute<Player> { sender, context, argument ->
-//                val name = context["name"]
-//                val warpData = ModuleWarp.database.getData(name)
-//                if (warpData == null) {
-//                    sender.sendLang("module-warp-warp-not-exists", name)
-//                    return@execute
-//                }
-//                val location = warpData.toLocation()
-//                sender.teleport(location)
-//                sender.sendLang("module-warp-warp-success", name)
-//            }
-//        }
         createHelper()
     }
 

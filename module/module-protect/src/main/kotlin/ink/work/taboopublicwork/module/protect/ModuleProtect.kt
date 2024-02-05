@@ -1,7 +1,7 @@
 package ink.work.taboopublicwork.module.protect
 
 import ink.work.taboopublicwork.api.IModule
-import ink.work.taboopublicwork.module.protect.data.ProtectData
+import org.bukkit.Bukkit
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.function.info
@@ -22,10 +22,10 @@ object ModuleProtect : IModule {
     override lateinit var langFile: Configuration
 
     // 总保护数据载体
-    var allProtectDataList: CopyOnWriteArrayList<ProtectData> = CopyOnWriteArrayList()
+    private var allProtectDataList: CopyOnWriteArrayList<ProtectData> = CopyOnWriteArrayList()
 
     // 世界保护数据载体
-    var worldProtectDataMap: ConcurrentHashMap<String, List<ProtectData>> = ConcurrentHashMap()
+    private var worldProtectDataMap: ConcurrentHashMap<String, List<ProtectData>> = ConcurrentHashMap()
 
     @Awake(LifeCycle.ENABLE)
     fun init() {
@@ -52,6 +52,18 @@ object ModuleProtect : IModule {
                 ProtectData("world.$it", key, config)
             }
             worldProtectDataMap[it] = list
+        }
+
+        submit {
+            Bukkit.getWorlds().forEach {
+                getProtectData(it.name).forEach { data ->
+                    if (!data.name.equals("weather", true)) return@forEach
+                    if (data.enabled) {
+                        it.setStorm(false)
+                        it.isThundering = false
+                    }
+                }
+            }
         }
     }
 

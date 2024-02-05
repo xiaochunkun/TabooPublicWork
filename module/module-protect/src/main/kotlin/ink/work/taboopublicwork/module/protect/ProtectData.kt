@@ -1,4 +1,4 @@
-package ink.work.taboopublicwork.module.protect.data
+package ink.work.taboopublicwork.module.protect
 
 import taboolib.library.configuration.ConfigurationSection
 import taboolib.library.xseries.XMaterial
@@ -8,17 +8,23 @@ data class ProtectData(
     var enabled: Boolean = false,
     var op: Boolean = false,
     var typeALL: Boolean = false,
-    var type: List<String> = listOf()
+    var white: List<String> = listOf(),
+    var blacklist: List<String> = listOf(),
 ) {
     constructor(key: String, name: String, section: ConfigurationSection) : this() {
         this.name = name
         enabled = section.getBoolean("$key.$name.enable", false)
         op = section.getBoolean("$key.$name.op", false)
         typeALL = section.getBoolean("$key.$name.typeAll", false)
-        type = section.getStringList("$key.$name.list")
+        white = section.getStringList("$key.$name.white")
+        blacklist = section.getStringList("$key.$name.black")
     }
 
-    fun getTypeList(): List<XMaterial> {
-        return type.mapNotNull { XMaterial.matchXMaterial(it).orElse(null) }
+    fun getBlackList(): List<XMaterial> {
+        return blacklist.mapNotNull { XMaterial.matchXMaterial(it).orElse(null) }
+    }
+
+    fun getWhiteList(): List<XMaterial> {
+        return white.mapNotNull { XMaterial.matchXMaterial(it).orElse(null) }
     }
 }
