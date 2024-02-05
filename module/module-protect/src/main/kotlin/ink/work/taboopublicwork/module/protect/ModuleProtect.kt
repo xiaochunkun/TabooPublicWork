@@ -56,7 +56,7 @@ object ModuleProtect : IModule {
 
         submit {
             Bukkit.getWorlds().forEach {
-                getProtectData(it.name).forEach { data ->
+                getProtectData(it.name).forEach data@{ data ->
                     if (!data.name.equals("weather", true)) return@forEach
                     if (data.enabled) {
                         it.setStorm(false)
