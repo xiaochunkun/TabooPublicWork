@@ -9,7 +9,7 @@ import taboolib.module.chat.colored
 import taboolib.platform.compat.replacePlaceholder
 import java.util.*
 
-class ScoreboardUtils(private val player: Player, private val name: String) {
+class ScoreboardUtils(private val player: Player, name: String) {
 
     val scores = mutableListOf<String>()
 
@@ -78,10 +78,10 @@ class ScoreboardUtils(private val player: Player, private val name: String) {
 
     private fun getSecondSplit(str: String): String {
         return if (str.length > 32) {
-            str.substring(0, 32)
+            str.substring(16, 32)
         } else {
             if (str.length > 16) {
-                str.substring(16)
+                str.substring(16, str.length)
             } else {
                 ""
             }
