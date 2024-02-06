@@ -19,6 +19,7 @@ object ProtectListener {
     // 禁止破坏
     @SubscribeEvent
     fun onBlockPlace(event: BlockPlaceEvent) {
+        if (!ModuleProtect.isEnable()) return
         val player = event.player
         val block = event.block
         val world = player.world.name
@@ -32,6 +33,7 @@ object ProtectListener {
     // 禁止建造
     @SubscribeEvent
     fun onBlockBreak(event: BlockBreakEvent) {
+        if (!ModuleProtect.isEnable()) return
         val player = event.player
         val block = event.block
         val world = player.world.name
@@ -44,6 +46,7 @@ object ProtectListener {
     // 禁止使用
     @SubscribeEvent
     fun onInteract(event: PlayerInteractEvent) {
+        if (!ModuleProtect.isEnable()) return
         val action = event.action
         if (action != Action.RIGHT_CLICK_BLOCK && action != Action.RIGHT_CLICK_AIR) return
         val itemStack = event.item ?: return
@@ -74,7 +77,7 @@ object ProtectListener {
     // 禁止爆炸
     @SubscribeEvent
     fun onExplode(event: EntityExplodeEvent) {
-
+        if (!ModuleProtect.isEnable()) return
         val world = event.location.world?.name ?: return
 
         ModuleProtect.getProtectData(world).forEach { data ->
@@ -88,6 +91,7 @@ object ProtectListener {
     // 天气保持晴天
     @SubscribeEvent
     fun onWeatherChange(event: WeatherChangeEvent) {
+        if (!ModuleProtect.isEnable()) return
         val world = event.world.name
 
         ModuleProtect.getProtectData(world).forEach { data ->
@@ -101,6 +105,7 @@ object ProtectListener {
     // 禁止玩家丢弃
     @SubscribeEvent
     fun onDropItem(event: PlayerDropItemEvent) {
+        if (!ModuleProtect.isEnable()) return
         val player = event.player
         val world = player.world.name
 
@@ -115,6 +120,7 @@ object ProtectListener {
     // 禁止玩家移动
     @SubscribeEvent
     fun onMove(event: PlayerMoveEvent) {
+        if (!ModuleProtect.isEnable()) return
         val player = event.player
 
         val world = player.world.name
@@ -130,6 +136,7 @@ object ProtectListener {
     // 禁止玩家飞行
     @SubscribeEvent
     fun onFly(event: PlayerToggleFlightEvent) {
+        if (!ModuleProtect.isEnable()) return
         val player = event.player
         val world = player.world.name
 
@@ -144,6 +151,7 @@ object ProtectListener {
     // 保持物品不掉落
     @SubscribeEvent
     fun onKeepInventory(event: PlayerDeathEvent) {
+        if (!ModuleProtect.isEnable()) return
         val player = event.entity
         val world = player.world.name
 
@@ -158,6 +166,7 @@ object ProtectListener {
     // 保持经验不掉落
     @SubscribeEvent
     fun onKeepExperience(event: PlayerDeathEvent) {
+        if (!ModuleProtect.isEnable()) return
         val player = event.entity
         val world = player.world.name
 
@@ -172,6 +181,7 @@ object ProtectListener {
     // 禁止火焰、菌丝蔓延
     @SubscribeEvent
     fun onSpread(event: BlockSpreadEvent) {
+        if (!ModuleProtect.isEnable()) return
         val world = event.block.world.name
 
         ModuleProtect.getProtectData(world).forEach { data ->
@@ -185,6 +195,7 @@ object ProtectListener {
     // 禁止方块点燃
     @SubscribeEvent
     fun onIgnite(event: BlockIgniteEvent) {
+        if (!ModuleProtect.isEnable()) return
         val world = event.block.world.name
 
         ModuleProtect.getProtectData(world).forEach { data ->
@@ -198,6 +209,7 @@ object ProtectListener {
     // 禁止雪、冰的融化  方块的燃烧消失
     @SubscribeEvent
     fun onFade(event: BlockFadeEvent) {
+        if (!ModuleProtect.isEnable()) return
         val world = event.block.world.name
 
         ModuleProtect.getProtectData(world).forEach { data ->
@@ -211,6 +223,7 @@ object ProtectListener {
     // 禁止树叶凋落
     @SubscribeEvent
     fun onLeaves(event: LeavesDecayEvent) {
+        if (!ModuleProtect.isEnable()) return
         val world = event.block.world.name
 
         ModuleProtect.getProtectData(world).forEach { data ->
@@ -224,6 +237,7 @@ object ProtectListener {
     // 禁止生物生成
     @SubscribeEvent
     fun onSpawn(event: CreatureSpawnEvent) {
+        if (!ModuleProtect.isEnable()) return
         val world = event.entity.world.name
 
         ModuleProtect.getProtectData(world).forEach { data ->
@@ -247,6 +261,7 @@ object ProtectListener {
     // 禁止耕地踩坏
     @SubscribeEvent
     fun onSoil(event: PlayerInteractEvent) {
+        if (!ModuleProtect.isEnable()) return
         val player = event.player
         val block = event.clickedBlock ?: return
         val world = player.world.name
@@ -262,6 +277,7 @@ object ProtectListener {
     // 禁止打开容器
     @SubscribeEvent
     fun onContainer(event: PlayerInteractEvent) {
+        if (!ModuleProtect.isEnable()) return
         val player = event.player
         if (event.action != Action.RIGHT_CLICK_BLOCK) return
         val block = event.clickedBlock ?: return
@@ -278,6 +294,7 @@ object ProtectListener {
     // 禁止鸡生蛋
     @SubscribeEvent
     fun onEgg(event: ItemSpawnEvent) {
+        if (!ModuleProtect.isEnable()) return
         val entity = event.entity
         val world = entity.world.name
 
@@ -292,6 +309,7 @@ object ProtectListener {
     // 是否禁止掉饱食度
     @SubscribeEvent
     fun onFood(event: FoodLevelChangeEvent) {
+        if (!ModuleProtect.isEnable()) return
         val player = event.entity
         val world = player.world.name
 
@@ -313,6 +331,7 @@ object ProtectListener {
     // 禁止流体流动
     @SubscribeEvent
     fun onFluid(event: BlockFromToEvent) {
+        if (!ModuleProtect.isEnable()) return
         val block = event.block
         val world = block.world.name
 
