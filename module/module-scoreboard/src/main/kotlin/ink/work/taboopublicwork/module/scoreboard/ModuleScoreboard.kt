@@ -1,4 +1,4 @@
-package ink.work.taboopublicwork.module
+package ink.work.taboopublicwork.module.scoreboard
 
 import ink.work.taboopublicwork.api.IModule
 import org.bukkit.event.player.PlayerJoinEvent

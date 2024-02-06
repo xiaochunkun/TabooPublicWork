@@ -1,4 +1,4 @@
-package ink.work.taboopublicwork.module
+package ink.work.taboopublicwork.module.scoreboard
 
 import taboolib.library.configuration.ConfigurationSection
 

@@ -1,4 +1,4 @@
-package ink.work.taboopublicwork.module
+package ink.work.taboopublicwork.module.scoreboard
 
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -54,23 +54,6 @@ class ScoreboardUtils(private val player: Player, private val name: String) {
         val suffix = getFirstSplit(ChatColor.getLastColors(prefix) + getSecondSplit(key))
         team.prefix = prefix
         team.suffix = suffix
-    }
-
-    fun removeSlot(slot: Int) {
-        val entry = genEntry(slot)
-        scores.remove(entry)
-        if (scoreboard.entries.contains(entry)) {
-            scoreboard.resetScores(entry)
-        }
-    }
-
-    fun replaceScore(key: String, value: String) {
-        for (i in 0 until scores.size) {
-            if (scores[i] == key) {
-                scores[i] = value
-                setSlot(i, value)
-            }
-        }
     }
 
     fun resetSlot(){

@@ -19,7 +19,7 @@ dependencies {
     implementation(project(":module:module-tpa"))
     implementation(project(":module:module-economy"))
     implementation(project(":module:module-protect"))
-    implementation(project(":module:module-board"))
+    implementation(project(":module:module-scoreboard"))
 }
 
 
