@@ -1,6 +1,7 @@
 package ink.work.taboopublicwork.module.scoreboard
 
 import ink.work.taboopublicwork.api.IModule
+import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerKickEvent
 import org.bukkit.event.player.PlayerQuitEvent
@@ -10,8 +11,16 @@ import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common.platform.function.info
 import taboolib.common.platform.function.submit
 import taboolib.common.platform.service.PlatformExecutor
+import taboolib.common.util.unsafeLazy
+import taboolib.library.reflex.Reflex.Companion.invokeMethod
+import taboolib.library.reflex.Reflex.Companion.setProperty
+import taboolib.library.reflex.Reflex.Companion.unsafeInstance
+import taboolib.module.chat.colored
 import taboolib.module.configuration.Configuration
-import java.util.UUID
+import taboolib.module.nms.nmsClass
+import taboolib.module.nms.sendPacket
+import taboolib.platform.compat.replacePlaceholder
+import java.util.*
 
 object ModuleScoreboard : IModule {
 
@@ -32,6 +41,10 @@ object ModuleScoreboard : IModule {
     private var updateTime = 20L
 
     private lateinit var scoreboardData: ScoreboardData
+
+    private lateinit var headerTabList: List<String>
+
+    private lateinit var footerTabList: List<String>
 
     @Awake(LifeCycle.ENABLE)
     fun init() {
@@ -62,12 +75,15 @@ object ModuleScoreboard : IModule {
         config.reload()
         updateTime = config.getLong("update-time", 20L)
         scoreboardData = ScoreboardData(config, "boards")
+        headerTabList = config.getStringList("tab-list.header")
+        footerTabList = config.getStringList("tab-list.footer")
     }
 
     @SubscribeEvent
     fun onJoin(event: PlayerJoinEvent) {
         if (ModuleScoreboard.isEnable()) {
             val player = event.player
+            sendTabList(player)
             val scoreboard = ScoreboardUtils(player, "TabooPublicWork")
             scoreboards[player.uniqueId] = scoreboard
             scoreboard.setTitle(scoreboardData.title)
@@ -89,5 +105,26 @@ object ModuleScoreboard : IModule {
             val player = event.player
             scoreboards.remove(player.uniqueId)
         }
+    }
+
+    private fun sendTabList(player: Player) {
+        val a = classChatSerializer.invokeMethod<Any>(
+            "a",
+            "{\"text\":\"" + headerTabList.colored().joinToString("\n") { it.replacePlaceholder(player) } + "\"}",
+            isStatic = true
+        )!!
+        val b = classChatSerializer.invokeMethod<Any>(
+            "b",
+            "{\"text\":\"" + footerTabList.colored().joinToString("\n") { it.replacePlaceholder(player) } + "\"}",
+            isStatic = true
+        )!!
+        player.sendPacket(nmsClass("PacketPlayOutPlayerListHeaderFooter").unsafeInstance().also {
+            it.setProperty("a", a)
+            it.setProperty("b", b)
+        })
+    }
+
+    private val classChatSerializer by unsafeLazy {
+        nmsClass("IChatBaseComponent\$ChatSerializer")
     }
 }

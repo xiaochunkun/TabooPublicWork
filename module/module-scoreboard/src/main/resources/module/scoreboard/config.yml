@@ -4,6 +4,21 @@ setting:
 # 更新时间 (单位: Tick)
 update-time: 10
 
+# Tab列表
+tab-list:
+  # tab头部
+  header:
+    - '&6欢迎来到服务器'
+    - '&6当前在线人数: &f%server_online%&7/&f%server_max_players%'
+    - '&f------------------------------------'
+  # tab底部
+  footer:
+    - '&f------------------------------------'
+    - '&7%player_world% &f%player_x%:&7%player_y%:&f%player_z%'
+    - '&7金币: &f%vault_eco_balance_formatted% &7时间: &f%server_time_HH:mm:ss%'
+    - '&f------------------------------------'
+
+
 # 记分板
 boards:
   #记分板标题
